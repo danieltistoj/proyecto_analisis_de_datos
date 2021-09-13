@@ -1,7 +1,7 @@
 import pymongo
 class conexion:
     def __init__(self):
-        self.mongo_host = "localhost"
+        self.mongo_host = "165.227.192.109"
         self.mongo_puerto = "27017"
         self.mongo_fuera = 1000
         self.mongo_uri = "mongodb://"+self.mongo_host+":"+self.mongo_puerto+"/"
