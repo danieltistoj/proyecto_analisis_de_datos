@@ -11,8 +11,9 @@ lista_tecla=[] #En esta lista se guardaran las palabras
 
 controlador = True
 sub = subproceso
+mongo_conexion = conexion()#Hacer conexion con la base de mongo
+
 def agregarBD_mongo(equipo,fecha_hora,informacion,fecha_hora_final,sub_proceso):
-    mongo_conexion = conexion()
     mongo_conexion.agregar_archivo(equipo,fecha_hora,informacion,fecha_hora_final,sub_proceso)
 
 def imprimir():
