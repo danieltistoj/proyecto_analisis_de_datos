@@ -2,7 +2,7 @@ import wmi
 def ultimos_procesos():
     f = wmi.WMI()
     procesos = ""
-    print("pid   Process name")
+    #print("pid   Process name")
 
     for process in f.Win32_Process():
        procesos = procesos  +  f"{process.ProcessId:<10} {process.Name}"+"\n"
