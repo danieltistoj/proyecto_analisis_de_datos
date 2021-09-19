@@ -9,4 +9,7 @@ def ultimos_procesos():
         diccionario[f"{process.ProcessId}"] = f" {process.Name}"
     return diccionario
 
+print(ultimos_procesos())
+
+
 #https://es.acervolima.com/2021/02/09/python-obtener-una-lista-de-los-procesos-en-ejecucion/

