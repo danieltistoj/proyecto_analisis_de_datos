@@ -4,6 +4,7 @@ import pynput.keyboard
 import socket
 import time
 from datetime import datetime
+from mysql import BasedeDatos
 import subproceso
 import platform
 import DATOSPC
@@ -15,6 +16,7 @@ sub = subproceso
 datos = DATOSPC
 
 mongo_conexion = conexion()#Hacer conexion con la base de mongo
+mysql_conexion = BasedeDatos()#Hace la conexion con mysql
 
 def agregarBD_mongo(equipo,fecha_hora,informacion,fecha_hora_final,sub_proceso,info,cpu,memoria,swap,disco,red):
     mongo_conexion.agregar_archivo(equipo,fecha_hora,informacion,fecha_hora_final,sub_proceso,info,cpu,memoria,swap,disco,red)

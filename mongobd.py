@@ -11,7 +11,7 @@ class conexion:
             self.cliente = pymongo.MongoClient(self.mongo_uri,serverSelectionTimeoutMs=self.mongo_fuera)
             self.baseDatos = self.cliente[self.mongo_basedatos]
             self.coleccion = self.baseDatos[self.mongo_coleccion]
-            print("coneccion exitosa con mongo")
+            print("conexion exitosa con mongo")
         except pymongo.errors.ServerSelectionTimeoutError as errorTiempo:
             print("Tiempo exedido " + errorTiempo)
         except pymongo.errors.ConnectionFailure as errorConexion:
