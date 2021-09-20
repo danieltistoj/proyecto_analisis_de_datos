@@ -64,7 +64,10 @@ def Disco_Duro():
     disk_io = psutil.disk_io_counters()
     for particion in particiones:
         i = i+1
-        uso = psutil.disk_usage(particion.mountpoint)
+        try:
+            uso = psutil.disk_usage(particion.mountpoint)
+        except:
+            uso = psutil.disk_usage("C:\\")
         infoi = {'Dispositivo' : particion.device,
                  'MountPoint' :  particion.mountpoint,
                  'File System Type' : particion.fstype,
