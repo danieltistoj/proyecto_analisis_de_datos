@@ -52,27 +52,13 @@ def convertir(key):
     else:
         return str(key)
 
-def extrar_informacion():
-    #Guarda la ip del equipo
-    equipo=socket.gethostbyname(socket.gethostname())
-    fecha_hora=""
-    informacion=""
-    fecha_hora_final = datetime.now().strftime('%Y-%m-%d %H:%M:%S'+"\n")
-    contador = 0
-    with open("log.txt", "r") as archivo:
-        for linea in archivo:
-            if contador == 0:
-                fecha_hora = linea
-            else:
-                informacion = informacion + linea
-            contador = contador+1
-
 def ciclo_ejecucion():
     while True:
         time.sleep(10)
         #1.PRIMER PASO
         ip_equipo = socket.gethostbyname(socket.gethostname())
         tiempo_inicial = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        time.sleep(10)
         lo_escrito = imprimir()
         tiempo_final = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         sub_proceso = sub.ultimos_procesos()
