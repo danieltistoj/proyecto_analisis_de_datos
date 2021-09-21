@@ -1,0 +1,25 @@
+CREATE TABLE ejecucion( id INT(11) NOT NULL AUTO_INCREMENT, fecha_hora_inicio VARCHAR(45), fecha_hora_final VARCHAR(45),id_equipo INT(11) NOT NULL, PRIMARY KEY(id), FOREIGN KEY(id_equipo) REFERENCES equipo(id));
+
+CREATE TABLE equipo(id INT(11) NOT NULL AUTO_INCREMENT, ip VARCHAR(45), ejecucion_id INT(11), PRIMARY KEY(id));
+
+CREATE TABLE informacion_del_sistema(id INT(11) NOT NULL AUTO_INCREMENT, systema VARCHAR(45) DEFAULT NULL,nombre VARCHAR(45) DEFAULT NULL,release_ VARCHAR(45) DEFAULT NULL,version VARCHAR(45),machine VARCHAR(45),procesador VARCHAR(45),id_ejecucion INT(11) NOT NULL, PRIMARY KEY(id), FOREIGN KEY(id_ejecucion) REFERENCES ejecucion(id));
+
+CREATE TABLE disco_duro(id INT(11) NOT NULL AUTO_INCREMENT, lectura_total VARCHAR(45),escritura_total VARCHAR(45), id_ejecucion INT(11) NOT NULL, PRIMARY KEY(id), FOREIGN KEY(id_ejecucion) REFERENCES ejecucion(id));
+
+CREATE TABLE particion(id INT(11) NOT NULL AUTO_INCREMENT, particion VARCHAR(45), dispositivo VARCHAR(45), mountPoint VARCHAR(45), file_system VARCHAR(45), tamano VARCHAR(45), en_uso VARCHAR(45), libre VARCHAR(45), id_disco_duro INT(11) NOT NULL, PRIMARY KEY(id), FOREIGN KEY(id_disco_duro) REFERENCES disco_duro(id));
+
+CREATE TABLE informacion_red(id INT(11) NOT NULL AUTO_INCREMENT, total_bytes_enviados VARCHAR(45), total_byte_received VARCHAR(45), id_ejecucion INT(11) NOT NULL, PRIMARY KEY(id), FOREIGN KEY(id_ejecucion) REFERENCES ejecucion(id));
+
+CREATE TABLE red( id INT(11) NOT NULL AUTO_INCREMENT, nombre VARCHAR(45), ip_address VARCHAR(45), netmask VARCHAR(45), broadcasr_ip VARCHAR(45), mac_address VARCHAR(45), broadcast_mac VARCHAR(45), id_informacion_red INT(11) NOT NULL, PRIMARY KEY(id), FOREIGN KEY(id_informacion_red) REFERENCES informacion_red(id));
+
+CREATE TABLE proceso(id INT(11) NOT NULL AUTO_INCREMENT, ip VARCHAR(45), nombre VARCHAR(45), id_ejecucion INT(45) NOT NULL, PRIMARY KEY(id), FOREIGN KEY(id_ejecucion) REFERENCES ejecucion(id));
+
+CREATE TABLE swap(id INT(11) NOT NULL AUTO_INCREMENT, total VARCHAR(45), libre VARCHAR(45), en_uso VARCHAR(45), porcentaje VARCHAR(45), id_ejecucion INT(11) NOT NULL, PRIMARY KEY(id), FOREIGN KEY(id_ejecucion) REFERENCES ejecucion(id));
+
+CREATE TABLE informacion_memoria(id INT(11) NOT NULL AUTO_INCREMENT,total VARCHAR(45),disponible VARCHAR(45), en_uso VARCHAR(45), porcentaje VARCHAR(45), id_ejecucion INT(11) NOT NULL, PRIMARY KEY(id), FOREIGN KEY(id_ejecucion) REFERENCES ejecucion(id));
+
+CREATE TABLE informacion_cpu(id INT(11) NOT NULL AUTO_INCREMENT, nucleos_fisicos VARCHAR(45),procesadores VARCHAR(45),frecuencia_max VARCHAR(45),frecuencia_min VARCHAR(45),frecuencia_actual VARCHAR(45),total_nucleos VARCHAR(45),id_ejecucion INT(11) NOT NULL, PRIMARY KEY(id), FOREIGN KEY(id_ejecucion ) REFERENCES ejecucion(id));
+
+CREATE TABLE uso_nucleos(id INT(11) NOT NULL AUTO_INCREMENT,core VARCHAR(45),porcentaje VARCHAR(45),id_informacion_cpu INT(11) NOT NULL,PRIMARY KEY(id),FOREIGN KEY(id_informacion_cpu) REFERENCES informacion_cpu(id));
+
+
