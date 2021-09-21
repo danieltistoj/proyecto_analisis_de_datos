@@ -56,7 +56,6 @@ def convertir(key):
 
 def ciclo_ejecucion():
     while True:
-        time.sleep(10)
         #1.PRIMER PASO
         ip_equipo = socket.gethostbyname(socket.gethostname())
         tiempo_inicial = datetime.now().strftime('%Y-%m-%d %H:%M:%S')

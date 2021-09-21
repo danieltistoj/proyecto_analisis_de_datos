@@ -8,7 +8,17 @@ class BasedeDatos:
             db = 'analisisdatos'
         )
         try:
+            self.connection.autocommit(True)
             self.cursor = self.connection.cursor()
             print("conexion exitoso con mysql")
         except:
             print("valio verga la conexion")
+
+    def get_consulta(self,consulta):
+        try:
+            self.cursor.execute(consulta)
+            data = self.cursor.fetchall()
+            for x in data:
+                print(x)
+        except:
+            print("Error al hacer la consulta")
