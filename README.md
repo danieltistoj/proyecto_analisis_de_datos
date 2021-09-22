@@ -1,4 +1,4 @@
-# proyecto_analisis_de_datos 💻
+# Proyecto análisis de datos💻
 
 ## Instalaciones necesarias
 ```sh
@@ -26,7 +26,7 @@ Freddy Mateo
 </td><td align="center" valign="top" width="11%">
 <a href="https://github.com/elmergustavo">
 <img src="https://avatars.githubusercontent.com/u/42653934?v=4" width="75" height="75"><br />
-Freddy Mateo
+Elmer Gustavo Pú
 </a>
 </td><td align="center" valign="top" width="11%">
 <a href="https://github.com/rosariogs">
