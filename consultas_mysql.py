@@ -61,5 +61,13 @@ def mostrar_equipos():
             break
         print(row[0])
 
+def insertar_proceso(ip,nombre,id_ejecucion):
+    query = "INSERT INTO proceso(ip,nombre,id_ejecucion) VALUES('{}','{}',{})".format(ip,nombre,id_ejecucion)
+    try:
+        print(query)
+        db.cursor.execute(query)
+    except:
+        print("Error al insertar proceso")
 
-insertar_ejecucion("","","192.168.191.82")
+
+#insertar_ejecucion("","","192.168.191.82")
