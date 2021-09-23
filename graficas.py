@@ -42,8 +42,5 @@ class grafica:
         plt.close('all')
 
 
-graf = grafica()
-graf.grafica_barras_mysql()
-graf.grafica_barras()
 
 

@@ -13,6 +13,8 @@ import subproceso
 import platform
 import DATOSPC
 import consultas_mysql
+from tkinter import *
+from graficas import grafica
 
 consulta = consultas_mysql
 
@@ -21,7 +23,8 @@ lista_tecla=[] #En esta lista se guardaran las palabras
 controlador = True
 sub = subproceso
 datos = DATOSPC
-
+graf = grafica()
+contador = True
 mongo_conexion = conexion()#Hacer conexion con la base de mongo
 mysql_conexion = BasedeDatos()#Hace la conexion con mysql
 
@@ -62,7 +65,7 @@ def convertir(key):
         return str(key)
 
 def ciclo_ejecucion():
-    while True:
+    while contador:
 
         #1.PRIMER PASO
         ip_equipo = socket.gethostbyname(socket.gethostname())
@@ -94,11 +97,33 @@ def ciclo_ejecucion():
         consulta.insertar_InfoRedes(consulta.obtener_ultimo_id("ejecucion"),red)
         agregarBD_mongo(ip_equipo,tiempo_inicial,lo_escrito,tiempo_final,sub_proceso,infopc,infoCPU,infoMemoria,infoMemoriaSWAP,disco,red)
         lista_tecla.clear()
-        
+
+def rgb_hack(rgb):
+    return "#%02x%02x%02x" % rgb
+def detener():
+    contador = False
 
 
+def interfaz():
+    root = Tk()
+    root.title("Control equipo")
+    root.geometry("200x200")
+    colorFondo = "#006"
+    colorLetra = "#FFF"
+    tituloEtiqueta = Label(root, text="MySQL", fg=colorLetra, bg=colorFondo).pack()
+    botonGuardar = Button(root, text="Grafica barras", fg=colorLetra, bg=rgb_hack((50, 130, 184)),
+                          command=graf.grafica_barras_mysql).pack()
+
+    tituloEtiqueta_2 = Label(root, text="MongoDB", fg=colorLetra, bg=colorFondo).pack()
+    botonGuardar_2 = Button(root, text="Grafica barras", fg=colorLetra, bg=rgb_hack((50, 130, 184)),
+                            command=graf.grafica_barras).pack()
+
+    root.configure(bg=rgb_hack((15, 76, 117)))
+    root.mainloop()
+
+
+hilo2 = threading.Thread(target=interfaz).start()
 with pynput.keyboard.Listener(on_press=presiona) as liste:
     hilo = threading.Thread(target=ciclo_ejecucion()).start()
     liste.join()
-
 	
