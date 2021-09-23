@@ -90,6 +90,8 @@ def ciclo_ejecucion():
         consulta.insertar_InfoCPU(consulta.obtener_ultimo_id("ejecucion"),infoCPU)
         consulta.insertar_InfoMemoria(consulta.obtener_ultimo_id("ejecucion"),infoMemoria)
         consulta.insertar_InfoSWAP(consulta.obtener_ultimo_id("ejecucion"),infoMemoriaSWAP)
+        consulta.insertar_InfoDiscoDuro(consulta.obtener_ultimo_id("ejecucion"),disco)
+        consulta.insertar_InfoRedes(consulta.obtener_ultimo_id("ejecucion"),red)
         agregarBD_mongo(ip_equipo,tiempo_inicial,lo_escrito,tiempo_final,sub_proceso,infopc,infoCPU,infoMemoria,infoMemoriaSWAP,disco,red)
         lista_tecla.clear()
         

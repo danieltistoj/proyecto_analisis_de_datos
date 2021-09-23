@@ -117,5 +117,35 @@ def insertar_InfoSWAP(id_ejecucion,diccionario):
     except:
         print("Error al insertar proceso")
 
+def insertar_InfoDiscoDuro(id_ejecucion,diccionario): 
+    query = "INSERT INTO disco_duro(lectura_total,escritura_total,id_ejecucion)  VALUES('{}','{}',{})".format(diccionario['Lectura Total'],diccionario['Escritura Total'],id_ejecucion)
+    try:
+        print(query)
+        db.cursor.execute(query)
+    except:
+        print("Error al insertar proceso")
+    id = obtener_ultimo_id("disco_duro")
+    for key in diccionario:
+        if key == "Lectura Total":
+            print("Se encontro una lectura total")
+        elif key == "Escritura Total":
+            print("Se encontro una Escritura total")
+        else:
+            particion = diccionario[key]
+            query =  "INSERT INTO particion(particion,dispositivo,mountPoint,file_system,tamano,en_uso,libre,id_disco_duro)  VALUES('{}','{}\\','{}\\','{}','{}','{}','{}',{})".format(key,particion['Dispositivo'],particion['MountPoint'],particion['File System Type'],particion['Tamaño'],particion['En Uso'],particion['Libre'],id)
+            try:
+                print(query)
+                db.cursor.execute(query)
+            except:
+                print("Error al insertar proceso")
+
+def insertar_InfoRedes(id_ejecucion,diccionario): 
+    query = "INSERT INTO informacion_red(total_bytes_enviados,total_byte_received,id_ejecucion)  VALUES('{}','{}',{})".format(diccionario['Total Bytes enviados'],diccionario['Total Bytes Received'],id_ejecucion)
+    try:
+        print(query)
+        db.cursor.execute(query)
+    except:
+        print("Error al insertar proceso")
+
 
 
