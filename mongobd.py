@@ -32,7 +32,7 @@ class conexion:
             "ultimos_procesos":sub_proceso
         }
         self.coleccion.insert(documento)
-    def agregacion(self):
+    def agregacion_ip(self):
         print("entro")
         query =  [{"$group":
                  {"_id": "$equipo",
@@ -51,3 +51,22 @@ class conexion:
 
         print(resultado)
         return ips,rep
+
+    def agregacion_concurrencia(self):
+        print("entro")
+        query =  [{"$group":
+                 {"_id": "$fecha_hora_inicial",
+                  "num_sesiones":
+                      {"$sum": 1}
+                  }
+             }]
+
+        resultado = self.coleccion.aggregate(query)
+        fechas_hora  = [] #guarda las ips
+        rep = [] #las veces que aparece cada ip
+        for x in resultado:
+           print(x)
+           fechas_hora.append(x.get("_id"))
+           rep.append(x.get("num_sesiones"))
+
+        return fechas_hora,rep
