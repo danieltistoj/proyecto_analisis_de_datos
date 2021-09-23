@@ -13,15 +13,15 @@ class grafica:
         ips, res = self.con.agregacion_ip()
 
         plt.bar(ips, res)
-        plt.title("Ejecuciones por equipo")
-        plt.xlabel("IP de equipos")
+        plt.title("Ejecuciones por equipo MongoDB")
+        plt.xlabel("Nombre de Host")
         plt.ylabel("Numero de ejecuciones")
         plt.show()
         plt.close('all')
 
 
     def grafica_barras_mysql(self):
-        query = "SELECT nombre, COUNT(*) FROM informacion_del_sistema GROUP BY nombre"
+        query = "SELECT nombre, COUNT(*) FROM informacion_del_sistema GROUP BY nombre HAVING nombre != '2'"
 
         nombres = []
         num_ejecuciones =[]
@@ -35,7 +35,7 @@ class grafica:
             num_ejecuciones.append(dato[1])
 
         plt.bar(nombres,num_ejecuciones)
-        plt.title("Ejecuciones por equipo")
+        plt.title("Ejecuciones por equipo MySQL")
         plt.xlabel("Nombre del equipos")
         plt.ylabel("Numero de ejecuciones")
         plt.show()
@@ -44,5 +44,6 @@ class grafica:
 
 graf = grafica()
 graf.grafica_barras_mysql()
+graf.grafica_barras()
 
 
