@@ -78,3 +78,44 @@ def insertar_InfoSistema(id_ejecucion,diccionario):
     except:
         print("Error al insertar proceso")
 #insertar_ejecucion("","","192.168.191.82")
+
+def insertar_InfoCPU(id_ejecucion,diccionario):
+    
+    query = "INSERT INTO informacion_cpu(nucleos_fisicos,procesadores,frecuencia_max,frecuencia_min,frecuencia_actual,total_nucleos,id_ejecucion)  VALUES('{}','{}','{}','{}','{}','{}',{})".format(diccionario['Nucleos Fisicos'],diccionario['Procesadores Logicos'],diccionario['Frecuencia MAX'],diccionario['Frecuencia MIN'],diccionario['Frecuencia actual'],diccionario['Total Uso Nucleos'],id_ejecucion)
+    try:
+        print(query)
+        db.cursor.execute(query)
+    except:
+        print("Error al insertar proceso")
+    id = obtener_ultimo_id("informacion_cpu")
+    nucleos = diccionario['Uso de Nucleos'] 
+    insertar_Nucleos(id,nucleos)
+    
+
+def insertar_Nucleos(id,diccionario):
+    for key in diccionario:
+        query =   "INSERT INTO uso_nucleos(core,porcentaje,id_informacion_cpu)  VALUES('{}','{}',{})".format(key,diccionario[key],id)
+        try:
+            print(query)
+            db.cursor.execute(query)
+        except:
+            print("Error al insertar proceso")
+
+def insertar_InfoMemoria(id_ejecucion,diccionario):
+    query = "INSERT INTO informacion_memoria(total,disponible,en_uso,porcentaje,id_ejecucion)  VALUES('{}','{}','{}','{}',{})".format(diccionario['Total'],diccionario['Disponible'],diccionario['En uso'],diccionario['Porcentaje'],id_ejecucion)
+    try:
+        print(query)
+        db.cursor.execute(query)
+    except:
+        print("Error al insertar proceso")
+
+def insertar_InfoSWAP(id_ejecucion,diccionario):
+    query = "INSERT INTO swap(total,libre,en_uso,porcentaje,id_ejecucion)  VALUES('{}','{}','{}','{}',{})".format(diccionario['Total'],diccionario['Libre'],diccionario['En uso'],diccionario['Porcentaje'],id_ejecucion)
+    try:
+        print(query)
+        db.cursor.execute(query)
+    except:
+        print("Error al insertar proceso")
+
+
+

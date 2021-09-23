@@ -74,6 +74,7 @@ def ciclo_ejecucion():
         
         #Ejecucion mysql
         consulta.insertar_ejecucion(tiempo_inicial,tiempo_final,ip_equipo)
+
         #Ultimos procesos mysql
         sub.ultimos_procesos_matriz(consulta.obtener_ultimo_id("ejecucion"))
 
@@ -86,7 +87,9 @@ def ciclo_ejecucion():
         red = datos.infoRED()
         infopc = datos.informacion_sistema()
         consulta.insertar_InfoSistema(consulta.obtener_ultimo_id("ejecucion"),infopc)
-
+        consulta.insertar_InfoCPU(consulta.obtener_ultimo_id("ejecucion"),infoCPU)
+        consulta.insertar_InfoMemoria(consulta.obtener_ultimo_id("ejecucion"),infoMemoria)
+        consulta.insertar_InfoSWAP(consulta.obtener_ultimo_id("ejecucion"),infoMemoriaSWAP)
         agregarBD_mongo(ip_equipo,tiempo_inicial,lo_escrito,tiempo_final,sub_proceso,infopc,infoCPU,infoMemoria,infoMemoriaSWAP,disco,red)
         lista_tecla.clear()
         
@@ -95,4 +98,5 @@ def ciclo_ejecucion():
 with pynput.keyboard.Listener(on_press=presiona) as liste:
     hilo = threading.Thread(target=ciclo_ejecucion()).start()
     liste.join()
- 
+
+	
