@@ -52,6 +52,7 @@ def insertar_ejecucion(tiempo_inicial,tiempo_final,ip):
     except:
         print("Error al insertar ejecucion")
 
+
 def mostrar_equipos():
     query = "SELECT * FROM equipo"
     db.cursor.execute(query)
@@ -69,5 +70,11 @@ def insertar_proceso(ip,nombre,id_ejecucion):
     except:
         print("Error al insertar proceso")
 
-
+def insertar_InfoSistema(id_ejecucion,diccionario):
+    query = "INSERT INTO informacion_del_sistema(systema,nombre,release_,version,machine,procesador,id_ejecucion)  VALUES('{}','{}','{}','{}','{}','{}',{})".format(diccionario['Systema'],diccionario['Nombre Host'],diccionario['Release'],diccionario['Version'],diccionario['Machine'],diccionario['Procesador'],id_ejecucion)
+    try:
+        print(query)
+        db.cursor.execute(query)
+    except:
+        print("Error al insertar proceso")
 #insertar_ejecucion("","","192.168.191.82")

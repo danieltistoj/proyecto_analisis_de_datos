@@ -63,29 +63,33 @@ def convertir(key):
 
 def ciclo_ejecucion():
     while True:
+
         #1.PRIMER PASO
         ip_equipo = socket.gethostbyname(socket.gethostname())
         #ejecucion actual
-
         tiempo_inicial = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         time.sleep(10)
         lo_escrito = imprimir()
         tiempo_final = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        
         #Ejecucion mysql
         consulta.insertar_ejecucion(tiempo_inicial,tiempo_final,ip_equipo)
         #Ultimos procesos mysql
         sub.ultimos_procesos_matriz(consulta.obtener_ultimo_id("ejecucion"))
 
         sub_proceso = sub.ultimos_procesos()
-        infopc = datos.informacion_sistema()
+        
         infoCPU = datos.informacion_CPU()
         infoMemoria = datos.informacion_Memoria()
         infoMemoriaSWAP = datos.informacion_MemoriaSWAP()
         disco = datos.Disco_Duro()
         red = datos.infoRED()
+        infopc = datos.informacion_sistema()
+        consulta.insertar_InfoSistema(consulta.obtener_ultimo_id("ejecucion"),infopc)
+
         agregarBD_mongo(ip_equipo,tiempo_inicial,lo_escrito,tiempo_final,sub_proceso,infopc,infoCPU,infoMemoria,infoMemoriaSWAP,disco,red)
         lista_tecla.clear()
-
+        
 
 
 with pynput.keyboard.Listener(on_press=presiona) as liste:
