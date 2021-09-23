@@ -1,11 +1,13 @@
 from mongobd import conexion
 import matplotlib.pylab as plt
+from mysql import BasedeDatos
 
 
 
 class grafica:
     def __init__(self):
         self.con = conexion()
+        self.con_mysql = BasedeDatos()
     def grafica_barras(self):
         #Muestra el nuemero de ejecuciones de cada maquina en una grafica de barras
         ips, res = self.con.agregacion_ip()
@@ -16,11 +18,31 @@ class grafica:
         plt.ylabel("Numero de ejecuciones")
         plt.show()
         plt.close('all')
-    def grafica_concurrencia(self):
-        fecha_hora, res = self.con.agregacion_concurrencia()
+
+
+    def grafica_barras_mysql(self):
+        query = "SELECT nombre, COUNT(*) FROM informacion_del_sistema GROUP BY nombre"
+
+        nombres = []
+        num_ejecuciones =[]
+        self.con_mysql.cursor.execute(query)
+
+        while True:
+            dato = self.con_mysql.cursor.fetchone()
+            if dato == None:
+                break
+            nombres.append(dato[0])
+            num_ejecuciones.append(dato[1])
+
+        plt.bar(nombres,num_ejecuciones)
+        plt.title("Ejecuciones por equipo")
+        plt.xlabel("Nombre del equipos")
+        plt.ylabel("Numero de ejecuciones")
+        plt.show()
+        plt.close('all')
 
 
 graf = grafica()
-graf.grafica_barras()
+graf.grafica_barras_mysql()
 
 
