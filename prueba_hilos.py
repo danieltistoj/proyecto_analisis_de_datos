@@ -1,7 +1,7 @@
 import threading
-from _testcapi import ipowType
+#from _testcapi import ipowType
 
-from prompt_toolkit.filters import in_paste_mode
+#from prompt_toolkit.filters import in_paste_mode
 
 from mongobd import conexion
 import pynput.keyboard

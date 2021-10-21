@@ -1,15 +1,41 @@
 # Proyecto análisis de datos💻
 
-## Instalaciones necesarias
+## Instalaciones necesarias Version Utilizada Python 3
 ```sh
 pip install pynput
 ```
-
 ```sh
 pip install pywin32
 ```
 ```sh
 pip install PyMySQL
+```
+```sh
+pip install pymongo
+```
+```sh
+pip install matplotlib
+```
+```sh
+pip install wmi
+```
+```sh
+pip install --user pymongo
+```
+```sh
+pip install pymysql
+```
+```sh
+pip3 install plotly
+```
+```sh
+pip install h5py
+```
+```sh
+pip install python-test
+```
+```sh
+pip install psutil
 ```
 ### Contributors
 
